@@ -7,17 +7,18 @@ podMonitor:
     labels:
       release: prometheus
 
-prometheusSpec:
-  retention: 15d
-  storage:
-    volumeClaimTemplate:
-      spec:
-        storageClassName: gp3-default
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 10Gi
+prometheus:
+  prometheusSpec:
+    retention: 15d
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp3-default
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
 
 grafana:
   persistence:
@@ -25,7 +26,6 @@ grafana:
     storageClassName: gp3-default
     size: 10Gi
 
-# Mantenemos ingress al mismo nivel que los otros valores
 ingress:
   prometheus:
     enabled: true
