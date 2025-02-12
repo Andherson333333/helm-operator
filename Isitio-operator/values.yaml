@@ -1,5 +1,5 @@
 base:
-  # valores para istio-base si los necesitas
+  enabled: true
 
 istiod:
   meshConfig:
