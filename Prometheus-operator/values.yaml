@@ -6,8 +6,8 @@ podMonitor:
   metadata:
     labels:
       release: prometheus
-
 prometheus:
+  enabled: true    # <- Añadir esta línea
   prometheusSpec:
     retention: 15d
     storage:
@@ -19,13 +19,11 @@ prometheus:
           resources:
             requests:
               storage: 10Gi
-
 grafana:
   persistence:
     enabled: true
     storageClassName: gp3-default
     size: 10Gi
-
 ingress:
   prometheus:
     enabled: true
@@ -39,7 +37,6 @@ ingress:
     service:
       name: prometheus-kube-prometheus-prometheus
       port: 9090
-  
   grafana:
     enabled: true
     className: nginx-external
