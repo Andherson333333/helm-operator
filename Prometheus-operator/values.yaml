@@ -1,16 +1,19 @@
+# Configuración de ServiceMonitor y PodMonitor
 serviceMonitor:
   metadata:
     labels:
       release: prometheus
+
 podMonitor:
   metadata:
     labels:
       release: prometheus
+
+# Configuración de Prometheus
 prometheus:
-  enabled: true    # <- Añadir esta línea
   prometheusSpec:
-    retention: 15d
-    storage:
+    retention: "15d"
+    storageSpec:
       volumeClaimTemplate:
         spec:
           storageClassName: gp3-default
@@ -19,11 +22,14 @@ prometheus:
           resources:
             requests:
               storage: 10Gi
+
+# (Opcional) Configuración de Grafana
 grafana:
   persistence:
     enabled: true
     storageClassName: gp3-default
     size: 10Gi
+
 ingress:
   prometheus:
     enabled: true
