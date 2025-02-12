@@ -6,6 +6,7 @@ podMonitor:
   metadata:
     labels:
       release: prometheus
+
 prometheus:
   prometheusSpec:
     retention: 15d
@@ -18,8 +19,34 @@ prometheus:
           resources:
             requests:
               storage: 10Gi
+
 grafana:
   persistence:
     enabled: true
     storageClassName: gp3-default
     size: 10Gi
+
+ingress:
+  prometheus:
+    enabled: true
+    className: nginx-external
+    host: prometheus.andherson33.click
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    service:
+      name: prometheus-kube-prometheus-prometheus
+      port: 9090
+  
+  grafana:
+    enabled: true
+    className: nginx-external
+    host: graphana.andherson33.click
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    service:
+      name: prometheus-grafana
+      port: 80
