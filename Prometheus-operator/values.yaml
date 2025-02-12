@@ -7,47 +7,46 @@ podMonitor:
     labels:
       release: prometheus
 
-kube-prometheus-stack:  # Añadir este nivel
+prometheusSpec:
+  retention: 15d
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: gp3-default
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+
+grafana:
+  persistence:
+    enabled: true
+    storageClassName: gp3-default
+    size: 10Gi
+
+# Mantenemos ingress al mismo nivel que los otros valores
+ingress:
   prometheus:
-    prometheusSpec:
-      retention: 15d
-      storage:  # Cambiar storageSpec a storage
-        volumeClaimTemplate:
-          spec:
-            storageClassName: gp3-default
-            accessModes:
-              - ReadWriteOnce
-            resources:
-              requests:
-                storage: 10Gi
-
+    enabled: true
+    className: nginx-external
+    host: prometheus.andherson33.click
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    service:
+      name: prometheus-kube-prometheus-prometheus
+      port: 9090
+  
   grafana:
-    persistence:
-      enabled: true
-      storageClassName: gp3-default
-      size: 10Gi
-
-  ingress:
-    prometheus:
-      enabled: true
-      className: nginx-external
-      host: prometheus.andherson33.click
-      annotations:
-        nginx.ingress.kubernetes.io/ssl-redirect: "false"
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-        nginx.ingress.kubernetes.io/proxy-body-size: "0"
-      service:
-        name: prometheus-kube-prometheus-prometheus
-        port: 9090
-    
-    grafana:
-      enabled: true
-      className: nginx-external
-      host: graphana.andherson33.click
-      annotations:
-        nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-      service:
-        name: prometheus-grafana
-        port: 80
+    enabled: true
+    className: nginx-external
+    host: graphana.andherson33.click
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    service:
+      name: prometheus-grafana
+      port: 80
