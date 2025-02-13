@@ -1,4 +1,3 @@
-# Configuración de ServiceMonitor y PodMonitor
 serviceMonitor:
   metadata:
     labels:
@@ -9,26 +8,43 @@ podMonitor:
     labels:
       release: prometheus
 
-# Configuración de Prometheus
-prometheus:
-  prometheusSpec:
-    retention: "15d"
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: gp3-default
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 10Gi
-
-# (Opcional) Configuración de Grafana
-grafana:
-  persistence:
+kube-prometheus-stack:
+  prometheusOperator:
     enabled: true
-    storageClassName: gp3-default
-    size: 10Gi
+
+  prometheus:
+    enabled: true
+    prometheusSpec:
+      retention: "15d"
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: gp3-default
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
+
+  grafana:
+    enabled: true
+    adminPassword: admin
+    persistence:
+      enabled: true
+      storageClassName: gp3-default
+      size: 10Gi
+
+  alertmanager:
+    enabled: true
+    alertmanagerSpec:
+      retention: 120h
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: gp3-default
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
 
 ingress:
   prometheus:
@@ -43,6 +59,7 @@ ingress:
     service:
       name: prometheus-kube-prometheus-prometheus
       port: 9090
+
   grafana:
     enabled: true
     className: nginx-external
