@@ -1,21 +1,17 @@
-serviceMonitor:
-  metadata:
-    labels:
-      release: prometheus
-
-podMonitor:
-  metadata:
-    labels:
-      release: prometheus
-
 kube-prometheus-stack:
   prometheusOperator:
     enabled: true
-
   prometheus:
     enabled: true
     prometheusSpec:
       retention: "15d"
+      # Selectores para evitar duplicados
+      serviceMonitorSelector:
+        matchLabels:
+          release: prometheus
+      podMonitorSelector:
+        matchLabels:
+          release: prometheus
       storageSpec:
         volumeClaimTemplate:
           spec:
@@ -24,7 +20,6 @@ kube-prometheus-stack:
             resources:
               requests:
                 storage: 10Gi
-
   grafana:
     enabled: true
     adminPassword: admin
@@ -32,7 +27,6 @@ kube-prometheus-stack:
       enabled: true
       storageClassName: gp3-default
       size: 10Gi
-
   alertmanager:
     enabled: true
     alertmanagerSpec:
@@ -57,16 +51,17 @@ ingress:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
     service:
-      name: prometheus-kube-prometheus-prometheus
+      name: prometheus-stack-kube-prom-prometheus
       port: 9090
-
   grafana:
     enabled: true
     className: nginx-external
     host: graphana.andherson33.click
     annotations:
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
     service:
-      name: prometheus-grafana
+      name: prometheus-stack-grafana
       port: 80
