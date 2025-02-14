@@ -1,45 +1,43 @@
 prometheusOperator:
-  enabled: true
-  admissionWebhooks:
-    enabled: false
-prometheus:
-  enabled: true
-  prometheusSpec:
-    retention: "15d"
-    # Selectores para evitar duplicados
-    serviceMonitorSelector:
-      matchLabels:
-        release: prometheus
-    podMonitorSelector:
-      matchLabels:
-        release: prometheus
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: gp3-default
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 10Gi
-grafana:
-  enabled: true
-  adminPassword: admin
-  persistence:
     enabled: true
-    storageClassName: gp3-default
-    size: 10Gi
-alertmanager:
-  enabled: true
-  alertmanagerSpec:
-    retention: 120h
-    storage:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: gp3-default
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 10Gi
+  prometheus:
+    enabled: true
+    prometheusSpec:
+      retention: "15d"
+      # Selectores para evitar duplicados
+      serviceMonitorSelector:
+        matchLabels:
+          release: prometheus
+      podMonitorSelector:
+        matchLabels:
+          release: prometheus
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: gp3-default
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
+  grafana:
+    enabled: true
+    adminPassword: admin
+    persistence:
+      enabled: true
+      storageClassName: gp3-default
+      size: 10Gi
+  alertmanager:
+    enabled: true
+    alertmanagerSpec:
+      retention: 120h
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: gp3-default
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
 ingress:
   prometheus:
     enabled: true
