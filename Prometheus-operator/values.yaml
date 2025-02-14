@@ -51,7 +51,6 @@ ingress:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
     service:
-      name: prometheus-stack-kube-prom-prometheus
       name: prometheus-operator-kube-p-prometheus
       port: 9090
   grafana:
@@ -60,6 +59,5 @@ ingress:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
     service:
-      name: prometheus-stack-grafana
       name: prometheus-operator-grafana
       port: 80
