@@ -5,7 +5,6 @@ kube-prometheus-stack:
     enabled: true
     prometheusSpec:
       retention: "15d"
-      # Selectores para evitar duplicados
       serviceMonitorSelector:
         matchLabels:
           release: prometheus
@@ -55,7 +54,11 @@ ingress:
       port: 9090
   grafana:
     enabled: true
+    className: nginx-external  # Añadido className
+    host: grafana.andherson33.click  # Añadido host
     annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
     service:
