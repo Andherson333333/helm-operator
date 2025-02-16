@@ -78,20 +78,6 @@ type: Opaque
 stringData:
   MYSQL_PASSWORD: "iloveit"
 ---
-# PersistentVolume para MongoDB
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mongodb-pvc
-  namespace: robot-shop
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: gp3-default
-  resources:
-    requests:
-      storage: 1Gi
----
 # Servicio Headless para MongoDB
 apiVersion: v1
 kind: Service
@@ -227,19 +213,6 @@ spec:
   - port: 6379
     targetPort: 6379
   type: ClusterIP
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pvc
-  namespace: robot-shop
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: gp3-default
-  resources:
-    requests:
-      storage: 1Gi
 ---
 # Servicio Headless para MySQL
 apiVersion: v1
