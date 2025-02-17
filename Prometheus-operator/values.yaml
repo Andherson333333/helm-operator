@@ -44,7 +44,7 @@ ingress:
   prometheus:
     enabled: true
     className: nginx-external
-    host: prometheus.andherson33.click
+    host: dev1-prometheus.andherson33.click
     annotations:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
@@ -56,7 +56,7 @@ ingress:
   grafana:
     enabled: true
     className: nginx-external
-    host: grafana.andherson33.click
+    host: dev1-grafana.andherson33.click
     annotations:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
