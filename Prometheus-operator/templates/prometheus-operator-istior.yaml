@@ -6,7 +6,7 @@ metadata:
  namespace: istio-system
  labels:
    monitoring: istio-proxies
-   release: prometheus
+   release: prometheus-operator
    # prometheus-operator
 spec:
  # Pod selector configuration
@@ -76,7 +76,7 @@ metadata:
  namespace: istio-system
  labels:
    monitoring: istio-components
-   release: prometheus
+   release: prometheus-operator
    # prometheus-operator
 spec:
  jobLabel: istio
