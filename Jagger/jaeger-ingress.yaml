@@ -9,19 +9,19 @@ metadata:
    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
    nginx.ingress.kubernetes.io/proxy-body-size: "0"
 spec:
-  ingressClassName: nginx-external  
- #ingressClassName: nginx-internal  
+ ingressClassName: nginx-external    # Para cambiar a interno, comentar esta línea y descomentar la siguiente
+ # ingressClassName: nginx-internal  # Para uso interno
  tls:
- - hosts:
-   - jaeger.andherson33.click
+   - hosts:
+       - jaeger.andherson33.click
  rules:
- - host: jaeger.andherson33.click
-   http:
-     paths:
-     - path: /
-       pathType: Prefix
-       backend:
-         service:
-           name: tracing
-           port:
-             number: 80
+   - host: jaeger.andherson33.click
+     http:
+       paths:
+         - path: /
+           pathType: Prefix
+           backend:
+             service:
+               name: tracing
+               port:
+                 number: 80
