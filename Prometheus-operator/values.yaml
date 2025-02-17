@@ -8,10 +8,12 @@ kube-prometheus-stack:
       # Selectores para evitar duplicados
       serviceMonitorSelector:
         matchLabels:
-          release: prometheus-operator
+          release: prometheus
+          # prometheus-operator
       podMonitorSelector:
         matchLabels:
-          release: prometheus-operator
+          release: prometheus
+          # prometheus-operator
       storageSpec:
         volumeClaimTemplate:
           spec:
