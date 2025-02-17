@@ -1,6 +1,6 @@
 # values.yaml
 meshProvider: "istio"          # Specifies Istio as the service mesh provider
-metricsServer: "http://prometheus-operated.monitoring.svc.cluster.local:9090"  # Prometheus server endpoint
+metricsServer: "http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local:9090"  # Prometheus server endpoint
 # Controller Configuration
 podMonitor:
 enabled: true              
