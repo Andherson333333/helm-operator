@@ -1,10 +1,5 @@
 loki:
-  serviceMonitor:
-    enabled: true
-  persistence:
-    enabled: true
-    storageClassName: gp3-default
-    size: 10Gi
+  enabled: true
 
 promtail:
   config:
@@ -27,19 +22,12 @@ promtail:
           regex: .+
           replacement: application
 
-grafana:
-  datasources:
-    datasources.yaml:
-      apiVersion: 1
-      datasources:
-        - name: Loki
-          type: loki
-          access: proxy
-          url: http://loki:3100
-          version: 1
-          editable: false
-          jsonData:
-            maxLines: 1000
-            timeout: 30
-            minInterval: 1m
-            liveEnabled: false
+fluent-bit:
+  enabled: false
+
+filebeat:
+  enabled: false
+
+logstash:
+  enabled: false
+
