@@ -125,6 +125,10 @@ spec:
       labels:
         app: mongodb
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: mongodb
         image: andherson1039/rs-mongodb
@@ -178,6 +182,10 @@ spec:
       labels:
         app: redis
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: redis
         image: redis:alpine3.20
@@ -259,6 +267,10 @@ spec:
       labels:
         app: mysql
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: mysql
         image: andherson1039/rs-mysql-db
@@ -313,6 +325,10 @@ spec:
       labels:
         app: rabbitmq
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: rabbitmq
         image: rabbitmq:4.0.3-management-alpine
@@ -373,6 +389,10 @@ spec:
       labels:
         app: catalogue
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: catalogue
         image: andherson1039/rs-catalogue
@@ -430,6 +450,10 @@ spec:
       labels:
         app: user
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: user
         image: andherson1039/rs-user
@@ -487,6 +511,10 @@ spec:
       labels:
         app: cart
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: cart
         image: andherson1039/rs-cart
@@ -544,6 +572,10 @@ spec:
       labels:
         app: shipping
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       initContainers:
       - name: wait-for-mysql
         image: busybox
@@ -610,6 +642,10 @@ spec:
       labels:
         app: payment
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: payment
         image: andherson1039/rs-payment:latest
@@ -666,6 +702,10 @@ spec:
       labels:
         app: dispatch
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: dispatch
         image: andherson1039/rs-dispatch
@@ -727,6 +767,10 @@ spec:
      labels:
        app: ratings
    spec:
+     # Configuración para ejecutar en nodos de aplicación
+     nodeSelector:
+       node-type: application
+       workload-type: business
      containers:
      - name: ratings
        image: andherson1039/rs-ratings:latest
@@ -788,6 +832,10 @@ spec:
       labels:
         app: web
     spec:
+      # Configuración para ejecutar en nodos de aplicación
+      nodeSelector:
+        node-type: application
+        workload-type: business
       containers:
       - name: web
         image: andherson1039/rs-web:latest
