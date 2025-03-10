@@ -8,3 +8,14 @@ args:
   - --metric-resolution=15s
   - --secure-port=10250
   - --kubelet-insecure-tls
+
+# Configuración para ejecutar en nodos de infraestructura
+nodeSelector:
+  node-type: infrastructure
+  workload-type: platform
+
+# Tolerations para permitir ejecutarse en nodos con taints
+tolerations:
+- key: "workload-type"
+  value: "infrastructure"
+  effect: "PreferNoSchedule"
