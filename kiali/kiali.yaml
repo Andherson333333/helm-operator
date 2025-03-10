@@ -86,7 +86,12 @@ data:
         sampler_rate: "1"
         time_field_format: 2006-01-02T15:04:05Z07:00
       namespace: istio-system
-      node_selector: {}
+      
+      # Configuración para ejecutar en nodos de infraestructura
+      node_selector:
+        node-type: infrastructure
+        workload-type: platform
+      
       pod_annotations: {}
       pod_labels:
         sidecar.istio.io/inject: "false"
@@ -104,7 +109,13 @@ data:
       security_context: {}
       service_annotations: {}
       service_type: ""
-      tolerations: []
+      
+      # Tolerations para nodos de infraestructura
+      tolerations:
+        - key: "workload-type"
+          value: "infrastructure"
+          effect: "PreferNoSchedule"
+      
       version_label: v2.0.0
       view_only_mode: false
 
@@ -359,6 +370,15 @@ spec:
         prometheus.io/port: "9090"
         kiali.io/dashboards: go,kiali
     spec:
+      # Configuración para ejecutar en nodos de infraestructura
+      nodeSelector:
+        node-type: infrastructure
+        workload-type: platform
+      tolerations:
+      - key: "workload-type"
+        value: "infrastructure"
+        effect: "PreferNoSchedule"
+      
       serviceAccountName: kiali
       containers:
         - image: "quay.io/kiali/kiali:v2.0"
