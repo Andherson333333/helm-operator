@@ -11,7 +11,6 @@ kube-prometheus-stack:
 
   prometheusOperator:
     enabled: true
-    createCustomResource: true  # Permite que Helm maneje los CRD
     nodeSelector:
       node-type: infrastructure
       workload-type: platform
