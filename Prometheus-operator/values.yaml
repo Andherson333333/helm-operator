@@ -11,7 +11,7 @@ kube-prometheus-stack:
 
   prometheusOperator:
     enabled: true
-    # Configuración para el operador
+    createCustomResource: true  # Permite que Helm maneje los CRD
     nodeSelector:
       node-type: infrastructure
       workload-type: platform
@@ -22,10 +22,8 @@ kube-prometheus-stack:
 
   prometheus:
     enabled: true
-    # Configuración para Prometheus
     prometheusSpec:
       retention: "15d"
-      # Configuración de nodeSelector y tolerations para Prometheus
       nodeSelector:
         node-type: infrastructure
         workload-type: platform
@@ -33,7 +31,6 @@ kube-prometheus-stack:
       - key: "workload-type"
         value: "infrastructure"
         effect: "PreferNoSchedule"
-      # Selectores para evitar duplicados
       serviceMonitorSelector:
         matchLabels:
           release: prometheus-stack
@@ -52,7 +49,6 @@ kube-prometheus-stack:
   grafana:
     enabled: true
     adminPassword: admin
-    # Configuración para Grafana
     nodeSelector:
       node-type: infrastructure
       workload-type: platform
@@ -67,7 +63,6 @@ kube-prometheus-stack:
 
   alertmanager:
     enabled: true
-    # Configuración para AlertManager
     alertmanagerSpec:
       nodeSelector:
         node-type: infrastructure
@@ -86,9 +81,7 @@ kube-prometheus-stack:
               requests:
                 storage: 10Gi
 
-  # Configuraciones adicionales para otros componentes
   kubeStateMetrics:
-    # Debe ejecutarse en nodos de infraestructura
     nodeSelector:
       node-type: infrastructure
       workload-type: platform
@@ -97,13 +90,10 @@ kube-prometheus-stack:
       value: "infrastructure"
       effect: "PreferNoSchedule"
 
-  # Node Exporter debe ejecutarse en todos los nodos para recopilar métricas
   nodeExporter:
-    # Sin nodeSelector para que se ejecute en todos los nodos
     tolerations:
     - operator: "Exists"  # Tolerar todos los taints
 
-# Configuración de ingress sin cambios
 ingress:
   prometheus:
     enabled: true
