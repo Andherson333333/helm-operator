@@ -1,10 +1,7 @@
 kube-prometheus-stack:
-  # Configuración global para todos los componentes (sin nodeSelector ni tolerations)
-  global: {}
-  
+  # Configuración para cada componente individualmente
   prometheusOperator:
     enabled: true
-    # Configuración para el operador
     nodeSelector:
       node-type: infrastructure
       workload-type: platform
@@ -12,13 +9,11 @@ kube-prometheus-stack:
     - key: "workload-type"
       value: "infrastructure"
       effect: "PreferNoSchedule"
-  
+
   prometheus:
     enabled: true
-    # Configuración para Prometheus
     prometheusSpec:
       retention: "15d"
-      # Configuración de nodeSelector y tolerations para Prometheus
       nodeSelector:
         node-type: infrastructure
         workload-type: platform
@@ -26,7 +21,6 @@ kube-prometheus-stack:
       - key: "workload-type"
         value: "infrastructure"
         effect: "PreferNoSchedule"
-      # Selectores para evitar duplicados
       serviceMonitorSelector:
         matchLabels:
           release: prometheus-stack
@@ -41,11 +35,10 @@ kube-prometheus-stack:
             resources:
               requests:
                 storage: 10Gi
-  
+
   grafana:
     enabled: true
     adminPassword: admin
-    # Configuración para Grafana
     nodeSelector:
       node-type: infrastructure
       workload-type: platform
@@ -57,10 +50,9 @@ kube-prometheus-stack:
       enabled: true
       storageClassName: gp3-default
       size: 10Gi
-  
+
   alertmanager:
     enabled: true
-    # Configuración para AlertManager
     alertmanagerSpec:
       nodeSelector:
         node-type: infrastructure
@@ -78,10 +70,8 @@ kube-prometheus-stack:
             resources:
               requests:
                 storage: 10Gi
-  
-  # Configuraciones adicionales para otros componentes
+
   kubeStateMetrics:
-    # Debe ejecutarse en nodos de infraestructura
     nodeSelector:
       node-type: infrastructure
       workload-type: platform
@@ -89,13 +79,11 @@ kube-prometheus-stack:
     - key: "workload-type"
       value: "infrastructure"
       effect: "PreferNoSchedule"
-  
-  # Node Exporter optimizado para ejecutarse en todos los nodos
+
+  # Node Exporter configurado específicamente para ejecutarse en TODOS los nodos
   nodeExporter:
-    # Configuración explícita de nodeSelector
     nodeSelector:
       kubernetes.io/os: linux
-    # Tolerancias para ejecutarse en todos los nodos
     tolerations:
     - operator: "Exists"
 
